@@ -1,0 +1,49 @@
+c<div class="row">
+    <div class ="col-lg-3">
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <%= gravatar_for current_user%>
+                <h3><%= current_user.name %></h3>
+                <%= current_user.email %>
+                <div class= "row">
+                    <div class = "col">
+                        <h4><%= current_user.following.count %></h4>
+                        <small>following</small>                
+                    </div>
+                    <div class= "col">
+                        <h4><%= current_user.followers.count %></h4>
+                        <small>followers</small>                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <%= form_for @post do |f| %>
+                    <%= render "shared/error_messages", object: f.object%>
+                    <div class="form-group">
+                        <%= f.text_area :content, class: "form-control",placeholder: "What's on your mind?" %>
+                        <div class="form-group">
+                            <%= f.file_field :picture, class: "mt-2" %>    
+                            <%= f.submit "Post", class: "btn btn-primary m-3 float-right" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+
+            <div class="card-body">
+                <% if @posts.any? %>
+                    <%= render @posts %>
+                <% else %>
+                    <h4 class="text-center">Nothing to show</h4>
+                <% end %>            
+            </div>
+            <div class="card-footer paginate text-center">
+                <%= will_paginate @posts if @posts.any? %>
+            </div>
+        </div>
+    </div>
+</div>
